@@ -10,6 +10,18 @@
     <ToolCommandName>packages-to-projects</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <LangVersion>latest</LangVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Authors>George Drak</Authors>
+    <Product>SonicGD.PackagesToProjectsTool</Product>
+    <Description>SonicGD.PackagesToProjectsTool is a .NET tool to convert package references to project references</Description>
+    <Summary>SonicGD.PackagesToProjectsTool is a .NET tool to convert package references to project references</Summary>
+    <RepositoryUrl>https://github.com/sonicgd/PackagesToProjectsTool</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sonicgd/PackagesToProjectsTool</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <WarningsAsErrors>CS4014;</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
