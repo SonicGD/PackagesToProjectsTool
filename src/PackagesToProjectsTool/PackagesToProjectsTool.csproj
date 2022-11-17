@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <RootNamespace>SonicGD.PackagesToProjectsTool</RootNamespace>
+    <AssemblyName>SonicGD.PackagesToProjectsTool</AssemblyName>
+    <PackageId>SonicGD.PackagesToProjectsTool</PackageId>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>packages-to-projects</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
