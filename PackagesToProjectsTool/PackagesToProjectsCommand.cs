@@ -10,8 +10,7 @@ public class PackagesToProjectsCommand : AsyncCommand<PackagesToProjectsCommandS
     {
         var switcherContext = new SwitcherContext
         {
-            SolutionPath = settings.SolutionPath,
-            ProjectsFolders = settings.ProjectsFolders.ToList()
+            SolutionPath = settings.SolutionPath, ProjectsFolders = settings.ProjectsFolders.ToList()
         };
         var switcher = new Switcher(switcherContext);
         await switcher.SwitchAsync();

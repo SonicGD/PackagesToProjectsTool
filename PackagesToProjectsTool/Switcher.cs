@@ -4,17 +4,14 @@ namespace PackagesToProjectsTool;
 
 public class Switcher
 {
-    private readonly SwitcherContext _context;
+    private readonly SwitcherContext context;
 
-    public Switcher(SwitcherContext context)
-    {
-        _context = context;
-    }
+    public Switcher(SwitcherContext context) => this.context = context;
 
     public async Task SwitchAsync()
     {
         var existingProjects = new List<string>();
-        foreach (var folder in _context.ProjectsFolders)
+        foreach (var folder in context.ProjectsFolders)
         {
             if (Directory.Exists(folder))
             {
@@ -24,9 +21,9 @@ public class Switcher
         }
 
 
-        var slnDir = Path.GetDirectoryName(_context.SolutionPath)!;
+        var slnDir = Path.GetDirectoryName(context.SolutionPath)!;
         var projects =
-            (await Cli.Wrap("dotnet").WithArguments(new[] { "sln", _context.SolutionPath, "list" })
+            (await Cli.Wrap("dotnet").WithArguments(new[] { "sln", context.SolutionPath, "list" })
                 .ExecuteCommandAsync())[2..^1]
             .Select(s => Path.GetFullPath(s, slnDir)).ToArray();
         var projectsToAttach = new HashSet<string>();
@@ -75,7 +72,14 @@ public class Switcher
         }
 
         Console.WriteLine("Attach external projects to solution");
-        var addProjectsCommandArgs = new List<string> { "sln", _context.SolutionPath, "add", "-s", "external" };
+        var addProjectsCommandArgs = new List<string>
+        {
+            "sln",
+            context.SolutionPath,
+            "add",
+            "-s",
+            "external"
+        };
         addProjectsCommandArgs.AddRange(projectsToAttach);
         addProjectsCommandArgs.AddRange(externalProjectsDependencies);
         await Cli.Wrap("dotnet").WithArguments(addProjectsCommandArgs).ExecuteCommandAsync();
