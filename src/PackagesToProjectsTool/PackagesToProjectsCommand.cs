@@ -22,7 +22,7 @@ public class PackagesToProjectsCommandSettings : CommandSettings
 {
     [Description("Path to solution")]
     [CommandArgument(0, "[path]")]
-    public string SolutionPath { get; init; } = "";
+    public string SolutionPath { get; set; } = "";
 
     [Description("Folders to search projects in")]
     [CommandOption("-f")]
@@ -32,8 +32,30 @@ public class PackagesToProjectsCommandSettings : CommandSettings
     {
         if (string.IsNullOrEmpty(SolutionPath))
         {
-            return ValidationResult.Error("Provide path to solution");
+            var slnFiles = Directory.GetFiles(Directory.GetCurrentDirectory(), "*.sln");
+            if (slnFiles.Any())
+            {
+                if (slnFiles.Length == 1)
+                {
+                    SolutionPath = slnFiles.First();
+                }
+                else
+                {
+                    return ValidationResult.Error(
+                        $"Multiple sln files found in current directory. Specify solution: packages-to-projects my.sln");
+                }
+            }
+            else
+            {
+                return ValidationResult.Error(
+                    $"No sln files found in current directory. Specify solution: packages-to-projects my.sln");
+            }
         }
+        else
+        {
+            SolutionPath = Path.GetFullPath(SolutionPath);
+        }
+
 
         if (!File.Exists(SolutionPath))
         {
