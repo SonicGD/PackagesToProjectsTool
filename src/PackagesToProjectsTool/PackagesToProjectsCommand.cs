@@ -2,7 +2,7 @@
 using Spectre.Console;
 using Spectre.Console.Cli;
 
-namespace PackagesToProjectsTool;
+namespace SonicGD.PackagesToProjectsTool;
 
 public class PackagesToProjectsCommand : AsyncCommand<PackagesToProjectsCommandSettings>
 {

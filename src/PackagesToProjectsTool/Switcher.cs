@@ -1,6 +1,6 @@
 ﻿using CliWrap;
 
-namespace PackagesToProjectsTool;
+namespace SonicGD.PackagesToProjectsTool;
 
 public class Switcher
 {

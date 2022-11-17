@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using CliWrap;
 
-namespace PackagesToProjectsTool;
+namespace SonicGD.PackagesToProjectsTool;
 
 public static class CliWrapExtensions
 {

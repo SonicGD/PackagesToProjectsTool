@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using PackagesToProjectsTool;
+using SonicGD.PackagesToProjectsTool;
 using Spectre.Console.Cli;
 
 Console.OutputEncoding = Encoding.UTF8;

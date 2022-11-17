@@ -1,6 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackagesToProjectsTool", "PackagesToProjectsTool\PackagesToProjectsTool.csproj", "{9D15E2B1-1EA1-4BB4-A7C4-4CF5FBE4FC41}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Files", "Solution Files", "{4850865A-895D-4190-8ADF-F0E0BC1867F6}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{C6776E2B-D5D3-4989-AA8D-95227DBDD6AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{21F01CA1-780B-41BF-9CFF-8CE769512A1D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DE6D1F78-1D7E-4912-BFEB-19C670B8C093}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackagesToProjectsTool", "src\PackagesToProjectsTool\PackagesToProjectsTool.csproj", "{F6606B76-EE9F-4F73-881D-AADF83239005}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +20,13 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9D15E2B1-1EA1-4BB4-A7C4-4CF5FBE4FC41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D15E2B1-1EA1-4BB4-A7C4-4CF5FBE4FC41}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D15E2B1-1EA1-4BB4-A7C4-4CF5FBE4FC41}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D15E2B1-1EA1-4BB4-A7C4-4CF5FBE4FC41}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6606B76-EE9F-4F73-881D-AADF83239005}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6606B76-EE9F-4F73-881D-AADF83239005}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6606B76-EE9F-4F73-881D-AADF83239005}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6606B76-EE9F-4F73-881D-AADF83239005}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{21F01CA1-780B-41BF-9CFF-8CE769512A1D} = {C6776E2B-D5D3-4989-AA8D-95227DBDD6AE}
+		{F6606B76-EE9F-4F73-881D-AADF83239005} = {DE6D1F78-1D7E-4912-BFEB-19C670B8C093}
 	EndGlobalSection
 EndGlobal
