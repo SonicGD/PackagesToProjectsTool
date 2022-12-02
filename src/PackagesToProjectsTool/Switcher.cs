@@ -1,4 +1,5 @@
-﻿using CliWrap;
+﻿using System.Xml.Linq;
+using CliWrap;
 
 namespace SonicGD.PackagesToProjectsTool;
 
@@ -10,13 +11,30 @@ public class Switcher
 
     public async Task SwitchAsync()
     {
-        var existingProjects = new List<string>();
+        var existingProjects = new List<ProjectDescription>();
         foreach (var folder in context.ProjectsFolders)
         {
             if (Directory.Exists(folder))
             {
                 var files = Directory.GetFiles(folder, "*.csproj", SearchOption.AllDirectories);
-                existingProjects.AddRange(files);
+                existingProjects.AddRange(files.Select(csprojPath =>
+                {
+                    var projectDocument = XDocument.Load(csprojPath);
+                    var np = projectDocument.Root!.Attribute("xmlns")?.Value ?? string.Empty;
+                    var properties = projectDocument.Root.Elements(np + "PropertyGroup")
+                        .SelectMany(x => x.Nodes().OfType<XElement>())
+                        .Select(x => new ProjectProperty(x.Name.LocalName, x.Value))
+                        .ToArray();
+                    var projectName = Path.GetFileName(csprojPath).Replace(".csproj", "");
+                    var assemblyName = "";
+                    var assemblyNameProperty = properties.LastOrDefault(x => x.Name == "AssemblyName");
+                    if (assemblyNameProperty is not null)
+                    {
+                        assemblyName = assemblyNameProperty.Value;
+                    }
+
+                    return new ProjectDescription(projectName, csprojPath, assemblyName);
+                }));
             }
         }
 
@@ -36,16 +54,16 @@ public class Switcher
                 .Select(p => p.Replace("   > ", "").Split(" ").First()).Distinct().ToArray();
             foreach (var package in packages)
             {
-                var existingProject =
-                    existingProjects.FirstOrDefault(p =>
-                        p.EndsWith($"\\{package}.csproj", StringComparison.OrdinalIgnoreCase));
-                if (!string.IsNullOrEmpty(existingProject))
+                var existingProject = existingProjects.FirstOrDefault(p => p.AssemblyName == package) ??
+                                      existingProjects.FirstOrDefault(p => p.Name == package);
+
+                if (existingProject is not null)
                 {
                     Console.WriteLine($"Replace package {package} with project {existingProject}");
-                    projectsToAttach.Add(existingProject);
+                    projectsToAttach.Add(existingProject.Path);
                     await Cli.Wrap("dotnet").WithArguments(new[] { "remove", project, "package", package })
                         .ExecuteCommandAsync();
-                    await Cli.Wrap("dotnet").WithArguments(new[] { "add", project, "reference", existingProject })
+                    await Cli.Wrap("dotnet").WithArguments(new[] { "add", project, "reference", existingProject.Path })
                         .ExecuteCommandAsync();
                 }
             }
@@ -91,3 +109,7 @@ public record SwitcherContext
     public string SolutionPath { get; init; } = "";
     public List<string> ProjectsFolders { get; init; } = new();
 }
+
+public record ProjectDescription(string Name, string Path, string AssemblyName);
+
+public record ProjectProperty(string Name, string Value);
