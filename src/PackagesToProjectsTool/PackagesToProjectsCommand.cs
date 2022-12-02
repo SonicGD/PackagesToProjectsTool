@@ -10,7 +10,11 @@ public class PackagesToProjectsCommand : AsyncCommand<PackagesToProjectsCommandS
     {
         var switcherContext = new SwitcherContext
         {
-            SolutionPath = settings.SolutionPath, ProjectsFolders = settings.ProjectsFolders.ToList()
+            SolutionPath = settings.SolutionPath,
+            ProjectsFolders = settings.ProjectsFolders.ToList(),
+            IsRecursive = settings.IsRecursive,
+            IsDryRun = settings.IsDryRun,
+            DisableCache = settings.DisableCache
         };
         var switcher = new Switcher(switcherContext);
         await switcher.SwitchAsync();
@@ -27,6 +31,18 @@ public class PackagesToProjectsCommandSettings : CommandSettings
     [Description("Folders to search projects in")]
     [CommandOption("-f")]
     public string[] ProjectsFolders { get; init; } = Array.Empty<string>();
+
+    [Description("Recursively replace packages in all dependent projects")]
+    [CommandOption("-r")]
+    public bool IsRecursive { get; init; } = false;
+
+    [Description("Dry run. Don't change relad files")]
+    [CommandOption("--dry-run")]
+    public bool IsDryRun { get; init; } = false;
+
+    [Description("Don't use cache. Reread all projects metadata")]
+    [CommandOption("--no-cache")]
+    public bool DisableCache { get; init; } = false;
 
     public override ValidationResult Validate()
     {

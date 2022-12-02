@@ -16,7 +16,13 @@ public static class CliWrapExtensions
             .ExecuteAsync(cancellationToken);
         if (result.ExitCode != 0)
         {
-            throw new InvalidOperationException(stdErrBuffer.ToString());
+            var err = stdErrBuffer.ToString();
+            if (err.Length == 0 && stdOutBuffer.Length > 0)
+            {
+                err = stdOutBuffer.ToString();
+            }
+
+            throw new InvalidOperationException(err);
         }
 
         return stdOutBuffer.ToString().Split(Environment.NewLine);
